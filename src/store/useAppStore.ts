@@ -35,7 +35,20 @@ interface AppState {
   setError: (err: string | null) => void;
 }
 
+import { executeMutationEngine } from '../core/mutators/mutationEngine';
+import { compilePostmanCollection } from '../core/compilers/postmanCompiler';
+import { compilePlaywrightSuite } from '../core/compilers/playwrightCompiler';
+
 const defaultTemplate = SAMPLE_APIS[0];
+
+const initialSuite = executeMutationEngine({
+  schema: defaultTemplate.schema,
+  baselinePayload: defaultTemplate.payload,
+  rules: { ...DEFAULT_RULE_SELECTION },
+  endpoint: defaultTemplate.endpoint,
+  postmanCompiler: compilePostmanCollection,
+  playwrightCompiler: compilePlaywrightSuite,
+});
 
 export const useAppStore = create<AppState>((set) => ({
   selectedTemplateId: defaultTemplate.id,
@@ -49,7 +62,7 @@ export const useAppStore = create<AppState>((set) => ({
   isGenerating: false,
   selectedVectorId: null,
 
-  generatedSuite: null,
+  generatedSuite: initialSuite,
   error: null,
 
   loadTemplate: (template) =>

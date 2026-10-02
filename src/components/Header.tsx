@@ -55,7 +55,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur px-6 py-3 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-50">
+    <header className="border-b border-slate-800 bg-slate-950 px-6 py-3 flex flex-wrap items-center justify-between gap-4 relative z-20 w-full">
       <div className="flex items-center gap-3">
         <div className="h-9 w-9 rounded-lg bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
           <Sparkles className="h-5 w-5 text-white" />
