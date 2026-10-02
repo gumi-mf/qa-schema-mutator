@@ -249,3 +249,132 @@ export const DEFAULT_RULE_SELECTION: RuleSelectionState = {
   pathTraversalVectors: true,
   extremeWhitespaceCrlf: true,
 };
+
+export type PresetProfileId = 'smoke_bva' | 'strict_contract' | 'adversarial_fuzzing' | 'all';
+
+export interface PresetProfile {
+  id: PresetProfileId;
+  name: string;
+  badge: string;
+  tagline: string;
+  description: string;
+  rules: RuleSelectionState;
+}
+
+export const PRESET_PROFILES: PresetProfile[] = [
+  {
+    id: 'smoke_bva',
+    name: 'Quick Smoke / BVA',
+    badge: '⚡ Fast',
+    tagline: 'Numerical boundaries, empty strings & null injections',
+    description: 'Numerical boundaries (0, -1, 2^53-1), empty strings, and null injections for quick verification.',
+    rules: {
+      numericMinMinusOne: true,
+      numericMaxPlusOne: true,
+      numericZeroAndNegative: true,
+      numericOverflow: true,
+      stringMinLengthMinusOne: true,
+      stringMaxLengthPlusOne: true,
+      stringBufferOverflow: false,
+      stringEmpty: true,
+      arrayEmpty: true,
+      arrayMaxItemsPlusOne: false,
+
+      omitRequiredFields: false,
+      explicitNullForNonNull: true,
+      emptyObjectsForRequired: false,
+      arrayNullItemInjection: false,
+
+      stringToInteger: false,
+      integerToString: false,
+      booleanToString: false,
+      primitiveToObject: false,
+      integerToFloat: false,
+
+      emojiSequences: false,
+      rightToLeftOverride: false,
+      zeroWidthSpaces: false,
+      sqlInjectionPatterns: false,
+      xssScriptTags: false,
+      pathTraversalVectors: false,
+      extremeWhitespaceCrlf: false,
+    },
+  },
+  {
+    id: 'strict_contract',
+    name: 'Strict Schema Contract',
+    badge: '📋 Contract',
+    tagline: 'Missing required keys, type inversions & contract safety',
+    description: 'Missing required keys, extra properties, and type inversions (e.g., string to array) for full contract audit.',
+    rules: {
+      numericMinMinusOne: true,
+      numericMaxPlusOne: true,
+      numericZeroAndNegative: true,
+      numericOverflow: false,
+      stringMinLengthMinusOne: true,
+      stringMaxLengthPlusOne: true,
+      stringBufferOverflow: false,
+      stringEmpty: true,
+      arrayEmpty: true,
+      arrayMaxItemsPlusOne: true,
+
+      omitRequiredFields: true,
+      explicitNullForNonNull: true,
+      emptyObjectsForRequired: true,
+      arrayNullItemInjection: true,
+
+      stringToInteger: true,
+      integerToString: true,
+      booleanToString: true,
+      primitiveToObject: true,
+      integerToFloat: true,
+
+      emojiSequences: false,
+      rightToLeftOverride: false,
+      zeroWidthSpaces: false,
+      sqlInjectionPatterns: false,
+      xssScriptTags: false,
+      pathTraversalVectors: false,
+      extremeWhitespaceCrlf: false,
+    },
+  },
+  {
+    id: 'adversarial_fuzzing',
+    name: 'Adversarial / Fuzzing',
+    badge: '🛡️ Security',
+    tagline: 'SQLi, XSS, unicode emoji clusters (₱🔥🚀), byte floods',
+    description: 'SQL/XSS injections, unicode emoji clusters (₱🔥🚀), byte floods, and control characters.',
+    rules: {
+      numericMinMinusOne: true,
+      numericMaxPlusOne: true,
+      numericZeroAndNegative: true,
+      numericOverflow: true,
+      stringMinLengthMinusOne: false,
+      stringMaxLengthPlusOne: false,
+      stringBufferOverflow: true,
+      stringEmpty: true,
+      arrayEmpty: false,
+      arrayMaxItemsPlusOne: false,
+
+      omitRequiredFields: true,
+      explicitNullForNonNull: true,
+      emptyObjectsForRequired: false,
+      arrayNullItemInjection: false,
+
+      stringToInteger: true,
+      integerToString: true,
+      booleanToString: true,
+      primitiveToObject: true,
+      integerToFloat: false,
+
+      emojiSequences: true,
+      rightToLeftOverride: true,
+      zeroWidthSpaces: true,
+      sqlInjectionPatterns: true,
+      xssScriptTags: true,
+      pathTraversalVectors: true,
+      extremeWhitespaceCrlf: true,
+    },
+  },
+];
+
