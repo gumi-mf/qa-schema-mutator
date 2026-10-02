@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Header } from '@/components/Header';
 import { EditorPanel } from '@/components/EditorPanel';
 import { RuleMatrixPanel } from '@/components/RuleMatrixPanel';
@@ -11,10 +11,7 @@ import {
   Play,
   Box,
   CheckCircle2,
-  FileCode,
-  Sliders,
-  Eye,
-  Share2,
+  X,
 } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -49,65 +46,66 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#070a10] text-slate-100 selection:bg-emerald-600/30 selection:text-emerald-200 font-sans">
+    <div className="min-h-screen flex flex-col bg-black text-zinc-100 selection:bg-white selection:text-black font-sans">
       <Header />
 
       {/* Global Error Banner if invalid JSON */}
       {error && (
-        <div className="bg-rose-950/80 border-b border-rose-800/80 px-6 py-2.5 flex items-center justify-between text-xs text-rose-200 font-mono">
+        <div className="bg-zinc-900 border-b border-zinc-700 px-6 py-2.5 flex items-center justify-between text-xs text-zinc-100 font-mono">
           <div className="flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 text-rose-400 shrink-0" />
+            <AlertCircle className="h-4 w-4 text-zinc-400 shrink-0" />
             <span>{error}</span>
           </div>
           <button
             onClick={() => setError(null)}
-            className="text-rose-400 hover:text-rose-200 font-bold px-2 py-0.5 rounded cursor-pointer"
+            className="text-zinc-400 hover:text-white p-1 rounded cursor-pointer"
+            aria-label="Dismiss error"
           >
-            ✕
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
       )}
 
       {/* Miller's Law: 4 Clearly Delineated Mental Zones Indicator */}
-      <div className="bg-slate-950/90 border-b border-neutral-800/80 px-6 py-2 flex items-center justify-between text-xs text-slate-400 font-mono">
-        <div className="flex items-center gap-6 overflow-x-auto">
-          <div className="flex items-center gap-2 text-slate-300">
-            <span className="w-5 h-5 rounded-full bg-slate-800 text-[10px] flex items-center justify-center font-bold text-slate-300">
+      <div className="bg-zinc-950 border-b border-zinc-800 px-6 py-2 flex items-center justify-between text-xs text-zinc-400 font-mono">
+        <div className="flex items-center gap-5 overflow-x-auto">
+          <div className="flex items-center gap-2 text-zinc-300">
+            <span className="w-4 h-4 rounded-full bg-zinc-800 text-[9px] flex items-center justify-center font-bold text-zinc-200">
               1
             </span>
-            <span className="font-semibold text-slate-200">Input Stage</span>
+            <span className="font-semibold text-zinc-200">Input Stage</span>
           </div>
-          <span className="text-neutral-700">→</span>
-          <div className="flex items-center gap-2 text-slate-300">
-            <span className="w-5 h-5 rounded-full bg-slate-800 text-[10px] flex items-center justify-center font-bold text-slate-300">
+          <span className="text-zinc-700">→</span>
+          <div className="flex items-center gap-2 text-zinc-300">
+            <span className="w-4 h-4 rounded-full bg-zinc-800 text-[9px] flex items-center justify-center font-bold text-zinc-200">
               2
             </span>
-            <span className="font-semibold text-slate-200">Mutation Config</span>
+            <span className="font-semibold text-zinc-200">Mutation Config</span>
           </div>
-          <span className="text-neutral-700">→</span>
-          <div className="flex items-center gap-2 text-slate-300">
-            <span className="w-5 h-5 rounded-full bg-slate-800 text-[10px] flex items-center justify-center font-bold text-slate-300">
+          <span className="text-zinc-700">→</span>
+          <div className="flex items-center gap-2 text-zinc-300">
+            <span className="w-4 h-4 rounded-full bg-zinc-800 text-[9px] flex items-center justify-center font-bold text-zinc-200">
               3
             </span>
-            <span className="font-semibold text-slate-200">Matrix Preview</span>
+            <span className="font-semibold text-zinc-200">Matrix Preview</span>
           </div>
-          <span className="text-neutral-700">→</span>
-          <div className="flex items-center gap-2 text-slate-300">
-            <span className="w-5 h-5 rounded-full bg-slate-800 text-[10px] flex items-center justify-center font-bold text-slate-300">
+          <span className="text-zinc-700">→</span>
+          <div className="flex items-center gap-2 text-zinc-300">
+            <span className="w-4 h-4 rounded-full bg-zinc-800 text-[9px] flex items-center justify-center font-bold text-zinc-200">
               4
             </span>
-            <span className="font-semibold text-slate-200">Export Center</span>
+            <span className="font-semibold text-zinc-200">Export Center</span>
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-2 text-[11px] text-slate-400">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <div className="hidden md:flex items-center gap-2 text-[11px] text-zinc-400">
+          <span className="w-1.5 h-1.5 rounded-full bg-zinc-200"></span>
           <span>100% Client-Side In-Memory AST Engine</span>
         </div>
       </div>
 
       {/* Main 3-Column Responsive Workspace */}
-      <main className="flex-1 p-4 sm:p-5 grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-0">
+      <main className="flex-1 p-4 sm:p-5 grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-0 bg-black">
         {/* Zone 1: Input Stage (4 cols) */}
         <section className="lg:col-span-4 flex flex-col min-h-[520px]">
           <EditorPanel />
@@ -125,15 +123,15 @@ export const App: React.FC = () => {
       </main>
 
       {/* Fitts's Law: Bottom-Right Sticky Floating Bar */}
-      <div className="fixed bottom-5 right-6 z-40 flex items-center gap-2 bg-slate-900/95 backdrop-blur border border-neutral-700/80 p-1.5 rounded-2xl shadow-2xl">
+      <div className="fixed bottom-5 right-6 z-40 flex items-center gap-2 bg-zinc-950 border border-zinc-800 p-1.5 rounded-xl shadow-2xl">
         <Button
           onClick={handleDownloadZip}
           variant="ghost"
           size="sm"
-          className="h-10 px-3.5 text-xs font-mono font-bold text-slate-200 hover:text-white hover:bg-slate-800 gap-1.5 cursor-pointer"
+          className="h-9 px-3 text-xs font-mono font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 gap-1.5 cursor-pointer"
           title="Download complete zip bundle"
         >
-          <Box className="h-4 w-4 text-emerald-400" />
+          <Box className="h-3.5 w-3.5 text-zinc-400" />
           <span className="hidden sm:inline">Zip Bundle</span>
         </Button>
 
@@ -141,17 +139,17 @@ export const App: React.FC = () => {
           onClick={executeGeneration}
           disabled={isGenerating}
           size="sm"
-          className="h-10 px-4 text-xs font-mono font-bold bg-emerald-600 hover:bg-emerald-500 text-white gap-2 shadow-lg shadow-emerald-600/30 cursor-pointer min-w-[44px]"
+          className="h-9 px-4 text-xs font-mono font-bold bg-white text-black hover:bg-zinc-200 gap-2 cursor-pointer min-w-[44px] shadow-none"
         >
-          <Play className="h-3.5 w-3.5 fill-white" />
+          <Play className="h-3.5 w-3.5 fill-black text-black" />
           <span>{isGenerating ? 'Compiling...' : 'Run Matrix'}</span>
         </Button>
       </div>
 
       {/* Floating Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 border border-emerald-500/50 text-white px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs font-mono animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-black border border-zinc-700 text-white px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs font-mono animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <CheckCircle2 className="h-4 w-4 text-white shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}

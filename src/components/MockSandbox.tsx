@@ -3,7 +3,7 @@ import { useAppStore } from '@/store/useAppStore';
 import { MutationResult } from '@/core/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Play, CheckCircle2, XCircle, Clock, Server, ArrowRight } from 'lucide-react';
+import { Play, CheckCircle2, XCircle, Clock, Server } from 'lucide-react';
 
 interface SimulationResult {
   vectorName: string;
@@ -23,11 +23,11 @@ export const MockSandbox: React.FC = () => {
 
   if (!generatedSuite) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-8 text-center text-slate-400">
-        <Server className="h-10 w-10 text-slate-600 mb-3" />
-        <h4 className="text-sm font-semibold text-slate-300">No Test Vectors Synthesized Yet</h4>
-        <p className="text-xs text-slate-500 max-w-sm mt-1">
-          Click <strong>"Synthesize Suites"</strong> above to generate test vectors and test them against this live simulator.
+      <div className="flex flex-col items-center justify-center h-full p-8 text-center text-zinc-400">
+        <Server className="h-9 w-9 text-zinc-600 mb-3" />
+        <h4 className="text-sm font-semibold text-zinc-300 font-mono">No Test Vectors Synthesized Yet</h4>
+        <p className="text-xs text-zinc-500 max-w-sm mt-1">
+          Click <strong className="text-zinc-300">"Generate Test Matrix"</strong> above to generate test vectors and test them against this live simulator.
         </p>
       </div>
     );
@@ -120,9 +120,9 @@ export const MockSandbox: React.FC = () => {
   return (
     <div className="flex flex-col h-full space-y-4 p-4">
       {/* Top Selector & Trigger */}
-      <div className="flex items-center justify-between gap-3 bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+      <div className="flex items-center justify-between gap-3 bg-zinc-950 p-3 rounded-xl border border-zinc-800">
         <div className="flex-1">
-          <label className="block text-[11px] font-semibold text-slate-400 mb-1">
+          <label className="block text-[11px] font-bold text-zinc-400 mb-1 font-mono">
             Select Test Vector to Simulate:
           </label>
           <select
@@ -131,7 +131,7 @@ export const MockSandbox: React.FC = () => {
               setSelectedVectorIndex(Number(e.target.value));
               setSimulationResult(null);
             }}
-            className="w-full bg-slate-950 border border-slate-700 rounded-md px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono"
+            className="w-full bg-black border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600 font-mono"
           >
             {allVectors.map((vec, idx) => (
               <option key={idx} value={idx}>
@@ -144,9 +144,9 @@ export const MockSandbox: React.FC = () => {
         <Button
           onClick={handleRunSimulation}
           disabled={isRunning}
-          className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs h-9 px-4 gap-2 shadow-lg shadow-emerald-600/20 cursor-pointer self-end"
+          className="bg-white text-black hover:bg-zinc-200 font-bold text-xs h-9 px-4 gap-2 cursor-pointer self-end shadow-none"
         >
-          <Play className="h-3.5 w-3.5 fill-white" />
+          <Play className="h-3.5 w-3.5 fill-black text-black" />
           <span>{isRunning ? 'Simulating...' : 'Execute Vector'}</span>
         </Button>
       </div>
@@ -154,31 +154,31 @@ export const MockSandbox: React.FC = () => {
       {/* Vector Payload Inspector & Simulation Result */}
       <div className="grid grid-cols-2 gap-4 flex-1 min-h-[360px]">
         {/* Left: Target Payload */}
-        <div className="flex flex-col bg-slate-950/80 border border-slate-800 rounded-lg overflow-hidden">
-          <div className="px-3 py-2 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-300">Dispatched Payload</span>
-            <Badge variant="outline" className="text-[10px] text-blue-400 border-blue-500/30">
+        <div className="flex flex-col bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden">
+          <div className="px-3 py-2 bg-black border-b border-zinc-800 flex items-center justify-between">
+            <span className="text-xs font-semibold text-zinc-300 font-mono">Dispatched Payload</span>
+            <Badge variant="outline" className="text-[10px] text-zinc-400 border-zinc-800 bg-zinc-900 font-mono">
               Expected: {currentVector.expectedStatus}
             </Badge>
           </div>
-          <pre className="p-3 text-xs text-slate-300 font-mono overflow-auto flex-1 bg-slate-950/50">
+          <pre className="p-3 text-xs text-zinc-300 font-mono overflow-auto flex-1 bg-zinc-950">
             {JSON.stringify(currentVector.vector.mutatedPayload, null, 2)}
           </pre>
         </div>
 
         {/* Right: Live Mock Server Response & Assertions */}
-        <div className="flex flex-col bg-slate-950/80 border border-slate-800 rounded-lg overflow-hidden">
-          <div className="px-3 py-2 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-300">Live Mock Response</span>
+        <div className="flex flex-col bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden">
+          <div className="px-3 py-2 bg-black border-b border-zinc-800 flex items-center justify-between">
+            <span className="text-xs font-semibold text-zinc-300 font-mono">Live Mock Response</span>
             {simulationResult && (
               <div className="flex items-center gap-2">
                 <Badge
-                  variant={simulationResult.status < 300 ? 'success' : 'warning'}
-                  className="text-[10px]"
+                  variant="default"
+                  className="text-[10px] border-zinc-700 bg-zinc-800 text-white font-mono"
                 >
                   {simulationResult.status} {simulationResult.statusText}
                 </Badge>
-                <span className="text-[11px] text-slate-400 flex items-center gap-1 font-mono">
+                <span className="text-[11px] text-zinc-400 flex items-center gap-1 font-mono">
                   <Clock className="h-3 w-3" /> {simulationResult.responseTimeMs}ms
                 </span>
               </div>
@@ -189,25 +189,25 @@ export const MockSandbox: React.FC = () => {
             <div className="flex flex-col flex-1 p-3 overflow-auto space-y-3">
               {/* Automated Assertions Results */}
               <div>
-                <span className="text-[11px] font-semibold text-slate-400 block mb-1.5">
+                <span className="text-[11px] font-bold text-zinc-400 block mb-1.5 font-mono">
                   Automated Assertions:
                 </span>
                 <div className="space-y-1.5">
                   {simulationResult.passedAssertions.map((msg, i) => (
                     <div
                       key={i}
-                      className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-950/30 border border-emerald-900/40 px-2.5 py-1 rounded"
+                      className="flex items-center gap-2 text-xs text-zinc-200 bg-zinc-900 border border-zinc-700 px-2.5 py-1.5 rounded font-mono"
                     >
-                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-white shrink-0" />
                       <span>{msg}</span>
                     </div>
                   ))}
                   {simulationResult.failedAssertions.map((msg, i) => (
                     <div
                       key={i}
-                      className="flex items-center gap-2 text-xs text-red-400 bg-red-950/30 border border-red-900/40 px-2.5 py-1 rounded"
+                      className="flex items-center gap-2 text-xs text-zinc-400 bg-zinc-900 border border-zinc-700 px-2.5 py-1.5 rounded font-mono line-through"
                     >
-                      <XCircle className="h-3.5 w-3.5 shrink-0" />
+                      <XCircle className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
                       <span>{msg}</span>
                     </div>
                   ))}
@@ -216,17 +216,17 @@ export const MockSandbox: React.FC = () => {
 
               {/* Response Body */}
               <div className="flex-1">
-                <span className="text-[11px] font-semibold text-slate-400 block mb-1">
+                <span className="text-[11px] font-bold text-zinc-400 block mb-1 font-mono">
                   Server Response Body:
                 </span>
-                <pre className="p-2.5 rounded bg-slate-900/80 border border-slate-800 text-xs text-slate-300 font-mono overflow-auto max-h-[160px]">
+                <pre className="p-2.5 rounded bg-black border border-zinc-800 text-xs text-zinc-300 font-mono overflow-auto max-h-[160px]">
                   {JSON.stringify(simulationResult.responseBody, null, 2)}
                 </pre>
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center flex-1 text-center p-6 text-slate-500">
-              <Play className="h-8 w-8 text-slate-700 mb-2" />
+            <div className="flex flex-col items-center justify-center flex-1 text-center p-6 text-zinc-500 font-mono">
+              <Play className="h-6 w-6 text-zinc-700 mb-2" />
               <p className="text-xs">Click "Execute Vector" to test this vector live against mock assertions.</p>
             </div>
           )}

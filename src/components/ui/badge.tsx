@@ -3,25 +3,26 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-mono font-medium transition-colors focus:outline-none",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-blue-600 text-white shadow",
+          "border-zinc-700 bg-zinc-800 text-zinc-100",
         secondary:
-          "border-slate-700 bg-slate-800 text-slate-300",
+          "border-zinc-800 bg-zinc-900 text-zinc-300",
         destructive:
-          "border-transparent bg-red-900/60 text-red-300 border-red-700/50",
-        outline: "text-slate-300 border-slate-700",
+          "border-zinc-700 bg-zinc-900 text-zinc-300",
+        outline:
+          "border-zinc-800 text-zinc-400 bg-transparent",
         success:
-          "border-emerald-700/50 bg-emerald-950/60 text-emerald-300",
+          "border-zinc-700 bg-zinc-900 text-zinc-100",
         warning:
-          "border-amber-700/50 bg-amber-950/60 text-amber-300",
+          "border-zinc-700 bg-zinc-900 text-zinc-200",
         info:
-          "border-cyan-700/50 bg-cyan-950/60 text-cyan-300",
+          "border-zinc-800 bg-zinc-900 text-zinc-300",
         purple:
-          "border-purple-700/50 bg-purple-950/60 text-purple-300",
+          "border-zinc-800 bg-zinc-900 text-zinc-300",
       },
     },
     defaultVariants: {

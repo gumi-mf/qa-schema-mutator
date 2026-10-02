@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppStore } from '@/store/useAppStore';
-import { PRESET_PROFILES, ALL_RULES, PresetProfileId } from '@/core/mutators/ruleRegistry';
+import { PRESET_PROFILES, ALL_RULES } from '@/core/mutators/ruleRegistry';
 import { RuleCategory, RuleSelectionState } from '@/core/types';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
@@ -10,7 +10,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from '@/components/ui/accordion';
-import { ShieldCheck, Zap, FileSpreadsheet, Sliders, CheckCircle2 } from 'lucide-react';
+import { Sliders, CheckCircle2 } from 'lucide-react';
 
 export const RuleMatrixPanel: React.FC = () => {
   const {
@@ -18,8 +18,6 @@ export const RuleMatrixPanel: React.FC = () => {
     applyPreset,
     selectedRules,
     toggleRule,
-    targetExpectedStatus,
-    setEndpointConfig,
   } = useAppStore();
 
   const categories: Array<{ id: RuleCategory; label: string }> = [
@@ -32,18 +30,18 @@ export const RuleMatrixPanel: React.FC = () => {
   const totalEnabled = Object.values(selectedRules).filter(Boolean).length;
 
   return (
-    <div className="flex flex-col h-full bg-[#0a0e17] border border-neutral-800 rounded-xl overflow-hidden shadow-2xl">
+    <div className="flex flex-col h-full bg-black border border-zinc-800 rounded-xl overflow-hidden">
       {/* Zone 2 Header */}
-      <div className="p-3 bg-slate-900/90 border-b border-neutral-800 flex items-center justify-between">
+      <div className="p-3 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between">
         <div>
-          <span className="text-xs font-bold text-slate-200 tracking-tight font-mono">
+          <span className="text-xs font-bold text-zinc-200 tracking-tight font-mono">
             Zone 2: Mutation Configuration
           </span>
-          <p className="text-[11px] text-slate-400 font-mono">
+          <p className="text-[11px] text-zinc-400 font-mono">
             3 Progressive Opinionated Presets (Hick's Law)
           </p>
         </div>
-        <Badge variant="outline" className="text-xs font-mono text-emerald-400 border-emerald-500/40 bg-emerald-950/30">
+        <Badge variant="outline" className="text-xs font-mono text-zinc-300 border-zinc-800 bg-zinc-900">
           {totalEnabled} Rules Active
         </Badge>
       </div>
@@ -51,7 +49,7 @@ export const RuleMatrixPanel: React.FC = () => {
       <div className="p-4 space-y-4 flex-1 overflow-y-auto">
         {/* Hick's Law: 3 Progressive Presets Cards */}
         <div className="space-y-2.5">
-          <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider font-mono">
+          <label className="block text-[11px] font-bold text-zinc-300 uppercase tracking-wider font-mono">
             Select Opinionated Preset:
           </label>
 
@@ -63,25 +61,25 @@ export const RuleMatrixPanel: React.FC = () => {
                 onClick={() => applyPreset(preset.id)}
                 className={`p-3 rounded-xl border transition-all cursor-pointer relative overflow-hidden ${
                   isSelected
-                    ? 'border-emerald-500/80 bg-gradient-to-r from-emerald-950/40 to-slate-900 shadow-md ring-1 ring-emerald-500/40'
-                    : 'border-neutral-800 bg-slate-950/60 hover:border-neutral-700 hover:bg-slate-900/40 opacity-80 hover:opacity-100'
+                    ? 'border-white bg-zinc-900 ring-1 ring-white/20 text-white'
+                    : 'border-zinc-800/80 bg-zinc-950/60 hover:border-zinc-700 hover:bg-zinc-900/40 text-zinc-400 opacity-80 hover:opacity-100'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-slate-100 font-mono">
+                    <span className="text-xs font-bold font-mono text-white">
                       {preset.name}
                     </span>
-                    <Badge variant="outline" className="text-[10px] py-0 px-1.5 border-neutral-700 text-slate-300">
+                    <Badge variant="outline" className="text-[10px] py-0 px-1.5 border-zinc-700 bg-zinc-800 text-zinc-200">
                       {preset.badge}
                     </Badge>
                   </div>
                   {isSelected && (
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                    <CheckCircle2 className="h-4 w-4 text-white shrink-0" />
                   )}
                 </div>
 
-                <p className="text-[11px] text-slate-300 leading-snug">
+                <p className="text-[11px] text-zinc-300 leading-snug">
                   {preset.description}
                 </p>
               </div>
@@ -90,31 +88,31 @@ export const RuleMatrixPanel: React.FC = () => {
         </div>
 
         {/* Target Expected Status Code (Tesler's Law sensible defaults) */}
-        <div className="p-3 bg-slate-950/80 border border-neutral-800 rounded-lg">
-          <label className="block text-[11px] font-bold text-slate-300 font-mono mb-1.5">
+        <div className="p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
+          <label className="block text-[11px] font-bold text-zinc-300 font-mono mb-1.5">
             Expected Edge-Case Failure Status:
           </label>
           <div className="flex items-center gap-3">
-            <span className="px-2.5 py-1 bg-amber-950/40 border border-amber-600/40 rounded text-amber-300 font-mono text-xs font-bold">
+            <span className="px-2.5 py-1 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 font-mono text-xs font-semibold">
               400 Bad Request
             </span>
-            <span className="text-xs text-slate-500 font-mono">or</span>
-            <span className="px-2.5 py-1 bg-amber-950/40 border border-amber-600/40 rounded text-amber-300 font-mono text-xs font-bold">
+            <span className="text-xs text-zinc-500 font-mono">or</span>
+            <span className="px-2.5 py-1 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 font-mono text-xs font-semibold">
               422 Unprocessable
             </span>
           </div>
-          <p className="text-[10px] text-slate-500 font-mono mt-1.5">
+          <p className="text-[10px] text-zinc-500 font-mono mt-1.5">
             Auto-inferred: Generated Postman and Playwright assertions verify both RFC 7231 (400) and RFC 4918 (422) standards.
           </p>
         </div>
 
         {/* Secondary Accordion for Advanced Custom Overrides */}
         <div className="pt-2">
-          <Accordion type="single" collapsible className="w-full border-t border-neutral-800">
+          <Accordion type="single" collapsible className="w-full border-t border-zinc-800">
             <AccordionItem value="advanced-rules" className="border-b-0">
-              <AccordionTrigger className="text-xs font-mono font-bold text-slate-300 hover:text-emerald-400 py-2.5">
+              <AccordionTrigger className="text-xs font-mono font-bold text-zinc-300 hover:text-white py-2.5">
                 <div className="flex items-center gap-2">
-                  <Sliders className="h-3.5 w-3.5 text-emerald-400" />
+                  <Sliders className="h-3.5 w-3.5 text-zinc-400" />
                   <span>Custom Rule Overrides ({ALL_RULES.length} Rules)</span>
                 </div>
               </AccordionTrigger>
@@ -124,8 +122,8 @@ export const RuleMatrixPanel: React.FC = () => {
                   const rulesInCat = ALL_RULES.filter((r) => r.category === cat.id);
                   return (
                     <div key={cat.id} className="space-y-2">
-                      <div className="flex items-center justify-between border-b border-neutral-800/80 pb-1">
-                        <span className="text-[11px] font-bold text-slate-400 font-mono">
+                      <div className="flex items-center justify-between border-b border-zinc-800 pb-1">
+                        <span className="text-[11px] font-bold text-zinc-400 font-mono">
                           {cat.label}
                         </span>
                       </div>
@@ -139,24 +137,22 @@ export const RuleMatrixPanel: React.FC = () => {
                               onClick={() => toggleRule(rule.id as keyof RuleSelectionState)}
                               className={`p-2 rounded-lg border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                                 isEnabled
-                                  ? 'bg-slate-900/80 border-neutral-700'
-                                  : 'bg-slate-950/40 border-neutral-900 opacity-50'
+                                  ? 'bg-zinc-900 border-zinc-700 text-zinc-100'
+                                  : 'bg-zinc-950/40 border-zinc-900 text-zinc-500 opacity-60'
                               }`}
                             >
                               <div className="flex-1 pr-2">
                                 <div className="flex items-center gap-2">
-                                  <span className="text-[11px] font-medium text-slate-200">
+                                  <span className="text-[11px] font-medium text-zinc-200">
                                     {rule.name}
                                   </span>
                                   <Badge
                                     variant={
                                       rule.severity === 'high'
-                                        ? 'destructive'
-                                        : rule.severity === 'medium'
-                                        ? 'warning'
+                                        ? 'default'
                                         : 'secondary'
                                     }
-                                    className="text-[9px] py-0 px-1"
+                                    className="text-[9px] py-0 px-1 font-mono"
                                   >
                                     {rule.severity}
                                   </Badge>

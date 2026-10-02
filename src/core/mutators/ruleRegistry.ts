@@ -162,7 +162,7 @@ export const ALL_RULES: RuleDefinition[] = [
   // Unicode & Fuzzing
   {
     id: 'emojiSequences',
-    name: 'High-Order UTF-8 Emojis (👨‍👩‍👧‍👦, 🔥, 🚀)',
+    name: 'High-Order UTF-8 & Multi-Byte Sequences',
     category: 'unicode_fuzz',
     description: 'Tests 4-byte UTF-8 encoding and Zero-Width Joiner (ZWJ) sequence support',
     defaultEnabled: true,
@@ -265,7 +265,7 @@ export const PRESET_PROFILES: PresetProfile[] = [
   {
     id: 'smoke_bva',
     name: 'Quick Smoke / BVA',
-    badge: '⚡ Fast',
+    badge: 'Fast',
     tagline: 'Numerical boundaries, empty strings & null injections',
     description: 'Numerical boundaries (0, -1, 2^53-1), empty strings, and null injections for quick verification.',
     rules: {
@@ -303,7 +303,7 @@ export const PRESET_PROFILES: PresetProfile[] = [
   {
     id: 'strict_contract',
     name: 'Strict Schema Contract',
-    badge: '📋 Contract',
+    badge: 'Contract',
     tagline: 'Missing required keys, type inversions & contract safety',
     description: 'Missing required keys, extra properties, and type inversions (e.g., string to array) for full contract audit.',
     rules: {
@@ -341,9 +341,9 @@ export const PRESET_PROFILES: PresetProfile[] = [
   {
     id: 'adversarial_fuzzing',
     name: 'Adversarial / Fuzzing',
-    badge: '🛡️ Security',
-    tagline: 'SQLi, XSS, unicode emoji clusters (₱🔥🚀), byte floods',
-    description: 'SQL/XSS injections, unicode emoji clusters (₱🔥🚀), byte floods, and control characters.',
+    badge: 'Fuzzing',
+    tagline: 'SQLi, XSS, multi-byte unicode strings, byte floods',
+    description: 'SQL/XSS injections, multi-byte unicode strings, byte floods, and control characters.',
     rules: {
       numericMinMinusOne: true,
       numericMaxPlusOne: true,

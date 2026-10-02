@@ -4,7 +4,7 @@ import { useAppStore } from '@/store/useAppStore';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { HttpMethod } from '@/core/types';
-import { Code2, Braces, Sliders, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Code2, Braces, Sliders, CheckCircle2, AlertCircle, Shield } from 'lucide-react';
 
 export const EditorPanel: React.FC = () => {
   const {
@@ -26,13 +26,13 @@ export const EditorPanel: React.FC = () => {
       const reqCount = Array.isArray(parsed.required) ? parsed.required.length : 0;
       return {
         isValid: true,
-        summary: `${propsCount} properties, ${reqCount} required`,
+        summary: `${propsCount} props, ${reqCount} required`,
         error: null,
       };
     } catch (err: any) {
       return {
         isValid: false,
-        summary: 'Invalid JSON Syntax',
+        summary: 'Invalid JSON',
         error: err.message,
       };
     }
@@ -50,45 +50,27 @@ export const EditorPanel: React.FC = () => {
     } catch (err: any) {
       return {
         isValid: false,
-        summary: 'Invalid JSON Syntax',
+        summary: 'Invalid JSON',
         error: err.message,
       };
     }
   }, [payloadInput]);
 
-  // Jakob's Law: Distinct Method Badges
-  const getMethodBadgeClass = (method: HttpMethod) => {
-    switch (method) {
-      case 'POST':
-        return 'bg-emerald-950/80 text-emerald-400 border-emerald-500/50 hover:bg-emerald-900/60';
-      case 'PUT':
-        return 'bg-amber-950/80 text-amber-400 border-amber-500/50 hover:bg-amber-900/60';
-      case 'PATCH':
-        return 'bg-cyan-950/80 text-cyan-400 border-cyan-500/50 hover:bg-cyan-900/60';
-      case 'DELETE':
-        return 'bg-rose-950/80 text-rose-400 border-rose-500/50 hover:bg-rose-900/60';
-      default:
-        return 'bg-blue-950/80 text-blue-400 border-blue-500/50';
-    }
-  };
-
   return (
-    <div className="flex flex-col h-full bg-[#0a0e17] border border-neutral-800 rounded-xl overflow-hidden shadow-2xl">
+    <div className="flex flex-col h-full bg-black border border-zinc-800 rounded-xl overflow-hidden">
       {/* Jakob's Law: HTTP Method Badge Directly Adjacent to Endpoint Input Path */}
-      <div className="p-3 bg-slate-900/90 border-b border-neutral-800 flex items-center gap-2">
+      <div className="p-3 bg-zinc-950 border-b border-zinc-800 flex items-center gap-2">
         <div className="relative">
           <select
             value={endpointConfig.method}
             onChange={(e) => setEndpointConfig({ method: e.target.value as HttpMethod })}
-            className={`font-mono font-bold text-xs px-3 py-1.5 rounded-lg border appearance-none cursor-pointer focus:outline-none transition-colors ${getMethodBadgeClass(
-              endpointConfig.method
-            )}`}
+            className="font-mono font-bold text-xs px-2.5 py-1.5 rounded-lg border border-zinc-700 bg-zinc-900 text-white appearance-none cursor-pointer focus:outline-none focus:border-zinc-500 transition-colors"
           >
-            <option value="POST" className="bg-slate-900 text-emerald-400">POST</option>
-            <option value="PUT" className="bg-slate-900 text-amber-400">PUT</option>
-            <option value="PATCH" className="bg-slate-900 text-cyan-400">PATCH</option>
-            <option value="GET" className="bg-slate-900 text-blue-400">GET</option>
-            <option value="DELETE" className="bg-slate-900 text-rose-400">DELETE</option>
+            <option value="POST" className="bg-zinc-900 text-white">POST</option>
+            <option value="PUT" className="bg-zinc-900 text-white">PUT</option>
+            <option value="PATCH" className="bg-zinc-900 text-white">PATCH</option>
+            <option value="GET" className="bg-zinc-900 text-white">GET</option>
+            <option value="DELETE" className="bg-zinc-900 text-white">DELETE</option>
           </select>
         </div>
 
@@ -97,7 +79,7 @@ export const EditorPanel: React.FC = () => {
             type="text"
             value={endpointConfig.url}
             onChange={(e) => setEndpointConfig({ url: e.target.value })}
-            className="w-full bg-slate-950 border border-neutral-700/80 rounded-lg px-3 py-1.5 text-xs text-slate-100 font-mono focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder:text-slate-600"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-zinc-100 font-mono focus:outline-none focus:border-zinc-600 placeholder:text-zinc-600"
             placeholder="https://api.example.com/v1/resource"
           />
         </div>
@@ -105,30 +87,30 @@ export const EditorPanel: React.FC = () => {
 
       {/* Zone 1 Navigation: Schema vs Sample Payload vs Headers */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="flex flex-col flex-1">
-        <div className="flex items-center justify-between px-3 py-2 bg-slate-950/80 border-b border-neutral-800">
-          <TabsList className="bg-slate-900 border border-neutral-800">
+        <div className="flex items-center justify-between px-3 py-2 bg-black border-b border-zinc-800">
+          <TabsList className="bg-zinc-950 border border-zinc-800">
             <TabsTrigger value="schema" className="gap-2 text-xs font-mono">
-              <Code2 className="h-3.5 w-3.5" />
+              <Code2 className="h-3.5 w-3.5 text-zinc-400" />
               <span>JSON Schema</span>
               {schemaValidation.isValid ? (
-                <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                <CheckCircle2 className="h-3 w-3 text-zinc-400" />
               ) : (
-                <AlertCircle className="h-3 w-3 text-rose-400" />
+                <AlertCircle className="h-3 w-3 text-zinc-500" />
               )}
             </TabsTrigger>
 
             <TabsTrigger value="payload" className="gap-2 text-xs font-mono">
-              <Braces className="h-3.5 w-3.5" />
+              <Braces className="h-3.5 w-3.5 text-zinc-400" />
               <span>Sample Payload</span>
               {payloadValidation.isValid ? (
-                <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                <CheckCircle2 className="h-3 w-3 text-zinc-400" />
               ) : (
-                <AlertCircle className="h-3 w-3 text-rose-400" />
+                <AlertCircle className="h-3 w-3 text-zinc-500" />
               )}
             </TabsTrigger>
 
             <TabsTrigger value="headers" className="gap-2 text-xs font-mono">
-              <Sliders className="h-3.5 w-3.5" />
+              <Sliders className="h-3.5 w-3.5 text-zinc-400" />
               <span>Headers & Auth</span>
             </TabsTrigger>
           </TabsList>
@@ -136,17 +118,7 @@ export const EditorPanel: React.FC = () => {
           {/* Doherty instant inline validation badge */}
           <Badge
             variant="outline"
-            className={`text-[11px] font-mono border-neutral-800 ${
-              activeTab === 'schema'
-                ? schemaValidation.isValid
-                  ? 'text-emerald-400 bg-emerald-950/30'
-                  : 'text-rose-400 bg-rose-950/30'
-                : activeTab === 'payload'
-                ? payloadValidation.isValid
-                  ? 'text-emerald-400 bg-emerald-950/30'
-                  : 'text-rose-400 bg-rose-950/30'
-                : 'text-slate-400 bg-slate-900'
-            }`}
+            className="text-[11px] font-mono border-zinc-800 bg-zinc-900 text-zinc-300"
           >
             {activeTab === 'schema'
               ? schemaValidation.summary
@@ -199,20 +171,20 @@ export const EditorPanel: React.FC = () => {
         {/* Tab 3: Headers & Configuration */}
         <TabsContent value="headers" className="mt-0 p-4 space-y-4 flex-1 overflow-auto">
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1 font-mono">
+            <label className="block text-xs font-semibold text-zinc-300 mb-1 font-mono">
               Endpoint Name / Purpose
             </label>
             <input
               type="text"
               value={endpointConfig.name}
               onChange={(e) => setEndpointConfig({ name: e.target.value })}
-              className="w-full bg-slate-950 border border-neutral-700 rounded-md px-3 py-1.5 text-xs text-slate-100 font-mono focus:ring-1 focus:ring-emerald-500"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-zinc-100 font-mono focus:border-zinc-600 focus:outline-none"
               placeholder="e.g. Create User or Process Payment"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1 font-mono">
+            <label className="block text-xs font-semibold text-zinc-300 mb-1 font-mono">
               Request Headers (JSON)
             </label>
             <textarea
@@ -226,12 +198,15 @@ export const EditorPanel: React.FC = () => {
                   // ignore while typing
                 }
               }}
-              className="w-full bg-slate-950 border border-neutral-700 rounded-md p-3 text-xs text-slate-100 font-mono focus:ring-1 focus:ring-emerald-500"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-md p-3 text-xs text-zinc-100 font-mono focus:border-zinc-600 focus:outline-none"
             />
           </div>
 
-          <div className="p-3 bg-emerald-950/20 border border-emerald-800/40 rounded-lg text-xs text-emerald-300 leading-relaxed font-mono">
-            🛡️ <strong>Zero-Cloud Mandate:</strong> 100% of JSON schema validation and AST mutations run locally in memory. No payloads or schemas leave your browser.
+          <div className="p-3 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-300 leading-relaxed font-mono flex items-start gap-2.5">
+            <Shield className="h-4 w-4 text-zinc-400 shrink-0 mt-0.5" />
+            <div>
+              <strong className="text-white">Zero-Cloud Mandate:</strong> 100% of JSON schema validation and AST mutations run locally in memory. No payloads or schemas leave your browser.
+            </div>
           </div>
         </TabsContent>
       </Tabs>
